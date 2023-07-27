@@ -20,10 +20,7 @@ const postSchema = mongoose.Schema({
         type: String,
         default: 'https://cdn.landesa.org/wp-content/uploads/default-user-image.png'
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
+    likes: [String],
     tags: [{
         type: String
     }]

@@ -9,7 +9,7 @@ const asyncHandler = require('express-async-handler')
 // POST /post/addPost
 //route type PRIVATE
 const createPost = asyncHandler(async (req,res)=>{
-    console.log('ok in createPost')
+    //console.log('ok in createPost')
     const response = await POST.create({
         title: req.body.title,
         cover: req.body.cover,
@@ -40,6 +40,7 @@ const getPosts = asyncHandler(async (req,res)=> {
 //route type PUBLIC
 
 const getPost = asyncHandler(async (req,res)=> {
+    //console.log('ingetPost',req.params.id)
     const post = await POST.findOne({_id: req.params.id})
     res.status(201).json(post)
 })
@@ -60,7 +61,8 @@ const getUserPosts = asyncHandler(async (req,res)=> {
 // POST /post/like/:id
 //route type PUBLIC
 const likePost = asyncHandler(async (req,res)=>{
-    const modifyPost = await POST.findOneAndUpdate({_id: req.params.id},{$inc: {likes: 1}},{new: true})
+    //console.log('inlikepost',req.body.userId)
+    const modifyPost = await POST.findOneAndUpdate({_id: req.params.id},{$push: {likes: req.body.userId}},{new: true})
     res.status(201).json(modifyPost)
 })
 
@@ -69,4 +71,6 @@ const likePost = asyncHandler(async (req,res)=>{
 module.exports = {
     getPosts,getPost,createPost,getUserPosts,likePost
 }
+
+
 

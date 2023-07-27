@@ -39,6 +39,7 @@ const register = asyncHandler(async (req,res)=>{
             name: newUser.name,
             email: newUser.email,
             userImage: newUser.userImage,
+            bookmark: newUser.bookmark,
             token: genrateToken(newUser._id)
         })
     }
@@ -59,6 +60,7 @@ const login = asyncHandler(async (req,res)=>{
             name: findUser.name,
             email: findUser.email,
             userImage: findUser.userImage,
+            bookmark: findUser.bookmark,
             token: genrateToken(findUser._id)
         })
     } else {
@@ -67,6 +69,27 @@ const login = asyncHandler(async (req,res)=>{
     }
 
 })
+
+// desc add bookmark
+// POST /user/post/:postId
+//route type Private
+
+const addBookmark = asyncHandler(async (req,res)=>{
+    //console.log('in add bookmark',req.body)
+    //console.log('params',req.params)
+    const modifyUser = await USER.findOneAndUpdate({_id: req.body.userId},{$push: {bookmark: {postId: req.params.id,postTitle: req.body.postTitle}}},{new: true})
+    //console.log(modifyUser)
+    res.status(201).json(modifyUser)
+})
+
+// desc add bookmark
+// POST /user/post/:postId
+//route type Private
+
+
+
+
+
 
 
 
@@ -79,5 +102,5 @@ const genrateToken =(id)=>{
 }
 
 
-module.exports = {register,login}
+module.exports = {register,login,addBookmark}
 

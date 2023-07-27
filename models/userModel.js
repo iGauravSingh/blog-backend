@@ -13,7 +13,11 @@ const userSchema = mongoose.Schema({
     userImage: {
         type: String,
         default: 'https://cdn.landesa.org/wp-content/uploads/default-user-image.png'
-    }
+    },
+    bookmark: [{
+        postId: String,
+        postTitle: String
+    }]
 })
 
 module.exports = mongoose.model('USER',userSchema)
